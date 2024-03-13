@@ -80,7 +80,9 @@ lib_libevdev = library('evdev',
 	install: true
 )
 
-dep_libevdev = declare_dependency(link_with: lib_libevdev)
+inc_libevdev = include_directories('.')
+dep_libevdev = declare_dependency(link_with: lib_libevdev,
+				  include_directories: [inc_libevdev])
 
 pkgconfig.generate(
 	filebase: 'libevdev',
