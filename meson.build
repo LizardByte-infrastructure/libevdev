@@ -55,8 +55,7 @@ event_names_h = configure_file(input: 'libevdev/libevdev.h',
 install_headers('libevdev/libevdev.h',
 		'libevdev/libevdev-uinput.h',
 		subdir: 'libevdev-1.0/libevdev')
-src_libevdev = [
-	event_names_h,
+src_libevdev = [event_names_h] + files(
 	'libevdev/libevdev.h',
 	'libevdev/libevdev-int.h',
 	'libevdev/libevdev-util.h',
@@ -67,7 +66,7 @@ src_libevdev = [
 	'libevdev/libevdev-names.c',
 	'include/linux/input.h',
 	'include/linux/uinput.h',
-]
+)
 
 mapfile = dir_src / 'libevdev.sym'
 version_flag = '-Wl,--version-script,@0@'.format(mapfile)
