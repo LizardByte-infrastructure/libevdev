@@ -401,7 +401,6 @@ soname:
   variables:
     MESON_BUILDDIR: build_dir
     B2C_KERNEL: {{ b2c.kernel }}
-    B2C_VERSION: {{ b2c.version }}
     B2C_IMAGE: $FDO_DISTRIBUTION_IMAGE
     B2C_COMMAND: .gitlab-ci/start-in-systemd.sh
   script:
