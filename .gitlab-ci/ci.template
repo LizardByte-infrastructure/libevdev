@@ -6,16 +6,16 @@
 #                                      #
 ########################################
 
-.templates_sha: &template_sha c1e465762df9d4208a03ed4df6cae15006579838 # see https://docs.gitlab.com/ee/ci/yaml/#includefile
+.templates_sha: &template_sha 9568e38927f9e9c48d4f586f84a071c3a4bdcd39 # see https://docs.gitlab.com/ee/ci/yaml/#includefile
 
 include:
   - project: 'freedesktop/ci-templates'
     ref: *template_sha
     file:
   {% for distribution in distributions|map(attribute='name')|unique()|sort() %}
-      # {{ distribution.capitalize() }} container builder template
       - '/templates/{{distribution}}.yml'
   {% endfor %}
+      - '/templates/ci-fairy.yml'
 
 stages:
   - prep             # rebuild the container images if there is a change
@@ -96,14 +96,11 @@ variables:
 # $SRCDIR/.gitlab-ci/generate-gitlab-ci.py
 #
 check-ci-script:
-  image: golang:alpine
+  extends:
+    - .fdo.ci-fairy
   stage: prep
-  before_script:
-    - apk add python3 py-pip git
-    - pip3 install git+http://gitlab.freedesktop.org/freedesktop/ci-templates
   script:
-    - ci-fairy generate-template
-    - git diff --exit-code && exit 0 || true
+    - ci-fairy generate-template --verify && exit 0 || true
     - echo "Committed gitlab-ci.yml differs from generated gitlab-ci.yml. Please verify"
     - exit 1
 
@@ -112,13 +109,13 @@ check-ci-script:
 #
 
 check-commit:
-  image: golang:alpine
+  extends:
+    - .fdo.ci-fairy
   stage: prep
-  before_script:
-    - apk add python3 py-pip git
-    - pip3 install git+http://gitlab.freedesktop.org/freedesktop/ci-templates
   script:
-    - ci-fairy check-commits --signed-off-by --junit-xml=results.xml
+    - ci-fairy -vv check-commits --signed-off-by --junit-xml=results.xml && exit 0 || true
+    - echo "Error checking the commit message format. Please verify"
+    - exit 1
   except:
     - master@libevdev/libevdev
   variables:
@@ -132,11 +129,9 @@ check-commit:
 #
 
 check-merge-request:
-  image: golang:alpine
+  extends:
+    - .fdo.ci-fairy
   stage: merge-check
-  before_script:
-    - apk add python3 py-pip git
-    - pip3 install git+http://gitlab.freedesktop.org/freedesktop/ci-templates
   script:
     - ci-fairy check-merge-request --require-allow-collaboration --junit-xml=results.xml
   artifacts:
@@ -144,6 +139,8 @@ check-merge-request:
     reports:
       junit: results.xml
   allow_failure: true
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
 
 
 {% for distro in distributions %}
@@ -190,11 +187,9 @@ check-merge-request:
 # the registry and will remove any that are not tagged with the provided
 # $container_image:$tag
 .container-clean:
+  extends:
+    - .fdo.ci-fairy
   stage: container_clean
-  image: golang:alpine
-  before_script:
-    - apk add python3 py-pip git
-    - pip3 install git+http://gitlab.freedesktop.org/freedesktop/ci-templates
   script:
     # Go to your Profile, Settings, Access Tokens
     # Create a personal token with 'api' scope, copy the value.
