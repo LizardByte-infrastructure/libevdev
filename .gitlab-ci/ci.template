@@ -409,7 +409,7 @@ soname:
     - .gitlab-ci/meson-build.sh --skip-test
 
     # pull b2c
-    - curl -L -o /app/boot2container https://gitlab.freedesktop.org/mupuf/boot2container/-/raw/{{b2c.version}}/vm2c.py
+    - curl -L -o /app/boot2container https://gitlab.freedesktop.org/gfx-ci/boot2container/-/raw/{{b2c.version}}/vm2c.py
     - chmod +x /app/boot2container
 
     # runs the test suite only
