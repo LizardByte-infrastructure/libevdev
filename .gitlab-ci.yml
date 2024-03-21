@@ -88,12 +88,6 @@ variables:
     FDO_DISTRIBUTION_TAG: '2023-05-08.0'
     FDO_DISTRIBUTION_VERSION: '23.04'
 
-.ubuntu:22.10:
-  extends: .fdo.distribution-image@ubuntu
-  variables:
-    FDO_DISTRIBUTION_TAG: '2023-05-08.0'
-    FDO_DISTRIBUTION_VERSION: '22.10'
-
 .debian:stable:
   extends: .fdo.distribution-image@debian
   variables:
@@ -234,17 +228,6 @@ ubuntu:23.04@container-prep:
 
 
 # Pulls in the container from upstream or rebuilds it if missing
-ubuntu:22.10@container-prep:
-  extends:
-    - .ubuntu:22.10
-    - .ubuntu.packages
-    - .fdo.container-build@ubuntu
-  stage: prep
-  variables:
-    GIT_STRATEGY: none
-
-
-# Pulls in the container from upstream or rebuilds it if missing
 debian:stable@container-prep:
   extends:
     - .debian:stable
@@ -337,13 +320,6 @@ ubuntu:23.04@container-clean:
     - .ubuntu:23.04
     - .container-clean
   needs: ["ubuntu:23.04@container-prep"]
-
-### ubuntu 22.10
-ubuntu:22.10@container-clean:
-  extends:
-    - .ubuntu:22.10
-    - .container-clean
-  needs: ["ubuntu:22.10@container-prep"]
 
 ### debian stable
 debian:stable@container-clean:
@@ -438,21 +414,6 @@ ubuntu:23.04@meson-build:
     - .meson-build@template
   stage: meson
   needs: ['ubuntu:23.04@container-prep']
-
-
-ubuntu:22.10@autotools-build:
-  extends:
-    - .ubuntu:22.10
-    - .autotools-build@template
-  stage: autotools
-  needs: ['ubuntu:22.10@container-prep']
-
-ubuntu:22.10@meson-build:
-  extends:
-    - .ubuntu:22.10
-    - .meson-build@template
-  stage: meson
-  needs: ['ubuntu:22.10@container-prep']
 
 
 debian:stable@autotools-build:

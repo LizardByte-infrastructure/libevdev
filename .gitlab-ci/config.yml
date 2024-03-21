@@ -43,7 +43,6 @@ distributions:
     tag: *default_tag
     versions:
       - '23.04'
-      - '22.10'
     packages:
       - git
       - gcc
