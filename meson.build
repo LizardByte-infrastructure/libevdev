@@ -233,8 +233,6 @@ endif
 
 doxygen = find_program('doxygen', required: get_option('documentation'))
 if doxygen.found()
-	doxygen = find_program('doxygen')
-
 	src_doxygen = files(
 		# source files
 		dir_src / 'libevdev.h',
