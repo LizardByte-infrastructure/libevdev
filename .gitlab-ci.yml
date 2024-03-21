@@ -210,15 +210,6 @@ fedora:38@container-prep:
   variables:
     GIT_STRATEGY: none
 
-# Always rebuilds the container
-fedora:38@container-forced-rebuild:
-  extends:
-    - fedora:38@container-prep
-  only:
-    - schedules
-  variables:
-    FDO_FORCE_REBUILD: 1
-
 
 # Pulls in the container from upstream or rebuilds it if missing
 fedora:39@container-prep:
@@ -229,15 +220,6 @@ fedora:39@container-prep:
   stage: prep
   variables:
     GIT_STRATEGY: none
-
-# Always rebuilds the container
-fedora:39@container-forced-rebuild:
-  extends:
-    - fedora:39@container-prep
-  only:
-    - schedules
-  variables:
-    FDO_FORCE_REBUILD: 1
 
 
 # Pulls in the container from upstream or rebuilds it if missing
@@ -250,15 +232,6 @@ ubuntu:23.04@container-prep:
   variables:
     GIT_STRATEGY: none
 
-# Always rebuilds the container
-ubuntu:23.04@container-forced-rebuild:
-  extends:
-    - ubuntu:23.04@container-prep
-  only:
-    - schedules
-  variables:
-    FDO_FORCE_REBUILD: 1
-
 
 # Pulls in the container from upstream or rebuilds it if missing
 ubuntu:22.10@container-prep:
@@ -269,15 +242,6 @@ ubuntu:22.10@container-prep:
   stage: prep
   variables:
     GIT_STRATEGY: none
-
-# Always rebuilds the container
-ubuntu:22.10@container-forced-rebuild:
-  extends:
-    - ubuntu:22.10@container-prep
-  only:
-    - schedules
-  variables:
-    FDO_FORCE_REBUILD: 1
 
 
 # Pulls in the container from upstream or rebuilds it if missing
@@ -290,15 +254,6 @@ debian:stable@container-prep:
   variables:
     GIT_STRATEGY: none
 
-# Always rebuilds the container
-debian:stable@container-forced-rebuild:
-  extends:
-    - debian:stable@container-prep
-  only:
-    - schedules
-  variables:
-    FDO_FORCE_REBUILD: 1
-
 
 # Pulls in the container from upstream or rebuilds it if missing
 debian:sid@container-prep:
@@ -309,15 +264,6 @@ debian:sid@container-prep:
   stage: prep
   variables:
     GIT_STRATEGY: none
-
-# Always rebuilds the container
-debian:sid@container-forced-rebuild:
-  extends:
-    - debian:sid@container-prep
-  only:
-    - schedules
-  variables:
-    FDO_FORCE_REBUILD: 1
 
 
 # Pulls in the container from upstream or rebuilds it if missing
@@ -330,15 +276,6 @@ arch:rolling@container-prep:
   variables:
     GIT_STRATEGY: none
 
-# Always rebuilds the container
-arch:rolling@container-forced-rebuild:
-  extends:
-    - arch:rolling@container-prep
-  only:
-    - schedules
-  variables:
-    FDO_FORCE_REBUILD: 1
-
 
 # Pulls in the container from upstream or rebuilds it if missing
 alpine:latest@container-prep:
@@ -349,15 +286,6 @@ alpine:latest@container-prep:
   stage: prep
   variables:
     GIT_STRATEGY: none
-
-# Always rebuilds the container
-alpine:latest@container-forced-rebuild:
-  extends:
-    - alpine:latest@container-prep
-  only:
-    - schedules
-  variables:
-    FDO_FORCE_REBUILD: 1
 
 
 #################################################################

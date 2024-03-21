@@ -163,15 +163,6 @@ check-merge-request:
   variables:
     GIT_STRATEGY: none
 
-# Always rebuilds the container
-{{ distro.name }}:{{ version }}@container-forced-rebuild:
-  extends:
-    - {{ distro.name }}:{{ version }}@container-prep
-  only:
-    - schedules
-  variables:
-    FDO_FORCE_REBUILD: 1
-
 {% endfor %}
 {% endfor %}
 
