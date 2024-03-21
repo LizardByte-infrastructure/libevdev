@@ -12,8 +12,8 @@ distributions:
     # only one distro for qemu tests
     use_for_qemu_tests: true
     versions:
-      - '37'
       - '38'
+      - '39'
     packages:
       - git
       - gcc
