@@ -73,43 +73,43 @@ variables:
 .fedora:38:
   extends: .fdo.distribution-image@fedora
   variables:
-    FDO_DISTRIBUTION_TAG: '2023-05-08.0'
+    FDO_DISTRIBUTION_TAG: '2024-03-24.0'
     FDO_DISTRIBUTION_VERSION: '38'
 
 .fedora:39:
   extends: .fdo.distribution-image@fedora
   variables:
-    FDO_DISTRIBUTION_TAG: '2023-05-08.0'
+    FDO_DISTRIBUTION_TAG: '2024-03-24.0'
     FDO_DISTRIBUTION_VERSION: '39'
 
 .ubuntu:23.04:
   extends: .fdo.distribution-image@ubuntu
   variables:
-    FDO_DISTRIBUTION_TAG: '2023-05-08.0'
+    FDO_DISTRIBUTION_TAG: '2024-03-24.0'
     FDO_DISTRIBUTION_VERSION: '23.04'
 
 .debian:stable:
   extends: .fdo.distribution-image@debian
   variables:
-    FDO_DISTRIBUTION_TAG: '2023-05-08.0'
+    FDO_DISTRIBUTION_TAG: '2024-03-24.0'
     FDO_DISTRIBUTION_VERSION: 'stable'
 
 .debian:sid:
   extends: .fdo.distribution-image@debian
   variables:
-    FDO_DISTRIBUTION_TAG: '2023-05-08.0'
+    FDO_DISTRIBUTION_TAG: '2024-03-24.0'
     FDO_DISTRIBUTION_VERSION: 'sid'
 
 .arch:rolling:
   extends: .fdo.distribution-image@arch
   variables:
-    FDO_DISTRIBUTION_TAG: '2023-05-08.0'
+    FDO_DISTRIBUTION_TAG: '2024-03-24.0'
     FDO_DISTRIBUTION_VERSION: 'rolling'
 
 .alpine:latest:
   extends: .fdo.distribution-image@alpine
   variables:
-    FDO_DISTRIBUTION_TAG: '2023-05-08.0'
+    FDO_DISTRIBUTION_TAG: '2024-03-24.0'
     FDO_DISTRIBUTION_VERSION: 'latest'
 
 
