@@ -72,46 +72,46 @@ variables:
   variables:
     MESON_TEST_ARGS: '--no-suite=needs-uinput'
 
-.fedora:38:
+.fedora:40:
   extends: .fdo.distribution-image@fedora
   variables:
-    FDO_DISTRIBUTION_TAG: '2024-03-24.0'
-    FDO_DISTRIBUTION_VERSION: '38'
+    FDO_DISTRIBUTION_TAG: '2024-11-25.0'
+    FDO_DISTRIBUTION_VERSION: '40'
 
-.fedora:39:
+.fedora:41:
   extends: .fdo.distribution-image@fedora
   variables:
-    FDO_DISTRIBUTION_TAG: '2024-03-24.0'
-    FDO_DISTRIBUTION_VERSION: '39'
+    FDO_DISTRIBUTION_TAG: '2024-11-25.0'
+    FDO_DISTRIBUTION_VERSION: '41'
 
-.ubuntu:23.04:
+.ubuntu:24.10:
   extends: .fdo.distribution-image@ubuntu
   variables:
-    FDO_DISTRIBUTION_TAG: '2024-03-24.0'
-    FDO_DISTRIBUTION_VERSION: '23.04'
+    FDO_DISTRIBUTION_TAG: '2024-11-25.0'
+    FDO_DISTRIBUTION_VERSION: '24.10'
 
 .debian:stable:
   extends: .fdo.distribution-image@debian
   variables:
-    FDO_DISTRIBUTION_TAG: '2024-03-24.0'
+    FDO_DISTRIBUTION_TAG: '2024-11-25.0'
     FDO_DISTRIBUTION_VERSION: 'stable'
 
 .debian:sid:
   extends: .fdo.distribution-image@debian
   variables:
-    FDO_DISTRIBUTION_TAG: '2024-03-24.0'
+    FDO_DISTRIBUTION_TAG: '2024-11-25.0'
     FDO_DISTRIBUTION_VERSION: 'sid'
 
 .arch:rolling:
   extends: .fdo.distribution-image@arch
   variables:
-    FDO_DISTRIBUTION_TAG: '2024-03-24.0'
+    FDO_DISTRIBUTION_TAG: '2024-11-25.0'
     FDO_DISTRIBUTION_VERSION: 'rolling'
 
 .alpine:latest:
   extends: .fdo.distribution-image@alpine
   variables:
-    FDO_DISTRIBUTION_TAG: '2024-03-24.0'
+    FDO_DISTRIBUTION_TAG: '2024-11-25.0'
     FDO_DISTRIBUTION_VERSION: 'latest'
 
 
@@ -188,7 +188,7 @@ check-merge-request:
 
 .arch.packages:
   variables:
-    FDO_DISTRIBUTION_PACKAGES: 'git gcc meson automake autoconf libtool make pkgconfig python3 check valgrind binutils doxygen'
+    FDO_DISTRIBUTION_PACKAGES: 'git gc meson automake autoconf libtool make pkgconfig python3 check valgrind binutils doxygen'
 
 .alpine.packages:
   variables:
@@ -197,9 +197,9 @@ check-merge-request:
 
 
 # Pulls in the container from upstream or rebuilds it if missing
-fedora:38@container-prep:
+fedora:40@container-prep:
   extends:
-    - .fedora:38
+    - .fedora:40
     - .fedora.packages
     - .fdo.container-build@fedora
   stage: prep
@@ -208,9 +208,9 @@ fedora:38@container-prep:
 
 
 # Pulls in the container from upstream or rebuilds it if missing
-fedora:39@container-prep:
+fedora:41@container-prep:
   extends:
-    - .fedora:39
+    - .fedora:41
     - .fedora.packages
     - .fdo.container-build@fedora
   stage: prep
@@ -219,9 +219,9 @@ fedora:39@container-prep:
 
 
 # Pulls in the container from upstream or rebuilds it if missing
-ubuntu:23.04@container-prep:
+ubuntu:24.10@container-prep:
   extends:
-    - .ubuntu:23.04
+    - .ubuntu:24.10
     - .ubuntu.packages
     - .fdo.container-build@ubuntu
   stage: prep
@@ -302,26 +302,26 @@ alpine:latest@container-prep:
   only:
     - schedules
 
-### fedora 38
-fedora:38@container-clean:
+### fedora 40
+fedora:40@container-clean:
   extends:
-    - .fedora:38
+    - .fedora:40
     - .container-clean
-  needs: ["fedora:38@container-prep"]
+  needs: ["fedora:40@container-prep"]
 
-### fedora 39
-fedora:39@container-clean:
+### fedora 41
+fedora:41@container-clean:
   extends:
-    - .fedora:39
+    - .fedora:41
     - .container-clean
-  needs: ["fedora:39@container-prep"]
+  needs: ["fedora:41@container-prep"]
 
-### ubuntu 23.04
-ubuntu:23.04@container-clean:
+### ubuntu 24.10
+ubuntu:24.10@container-clean:
   extends:
-    - .ubuntu:23.04
+    - .ubuntu:24.10
     - .container-clean
-  needs: ["ubuntu:23.04@container-prep"]
+  needs: ["ubuntu:24.10@container-prep"]
 
 ### debian stable
 debian:stable@container-clean:
@@ -373,49 +373,49 @@ alpine:latest@container-clean:
   dependencies: []
 
 
-fedora:38@autotools-build:
+fedora:40@autotools-build:
   extends:
-    - .fedora:38
+    - .fedora:40
     - .autotools-build@template
   stage: autotools
-  needs: ['fedora:38@container-prep']
+  needs: ['fedora:40@container-prep']
 
-fedora:38@meson-build:
+fedora:40@meson-build:
   extends:
-    - .fedora:38
+    - .fedora:40
     - .meson-build@template
   stage: meson
-  needs: ['fedora:38@container-prep']
+  needs: ['fedora:40@container-prep']
 
 
-fedora:39@autotools-build:
+fedora:41@autotools-build:
   extends:
-    - .fedora:39
+    - .fedora:41
     - .autotools-build@template
   stage: autotools
-  needs: ['fedora:39@container-prep']
+  needs: ['fedora:41@container-prep']
 
-fedora:39@meson-build:
+fedora:41@meson-build:
   extends:
-    - .fedora:39
+    - .fedora:41
     - .meson-build@template
   stage: meson
-  needs: ['fedora:39@container-prep']
+  needs: ['fedora:41@container-prep']
 
 
-ubuntu:23.04@autotools-build:
+ubuntu:24.10@autotools-build:
   extends:
-    - .ubuntu:23.04
+    - .ubuntu:24.10
     - .autotools-build@template
   stage: autotools
-  needs: ['ubuntu:23.04@container-prep']
+  needs: ['ubuntu:24.10@container-prep']
 
-ubuntu:23.04@meson-build:
+ubuntu:24.10@meson-build:
   extends:
-    - .ubuntu:23.04
+    - .ubuntu:24.10
     - .meson-build@template
   stage: meson
-  needs: ['ubuntu:23.04@container-prep']
+  needs: ['ubuntu:24.10@container-prep']
 
 
 debian:stable@autotools-build:
@@ -484,10 +484,10 @@ alpine:latest@meson-build:
 # because they're supposed to fail equally on all
 .fedora-custom-build@autotools-template:
   extends:
-    - .fedora:38
+    - .fedora:40
     - .autotools-build@template
   stage: build
-  needs: ['fedora:38@container-prep']
+  needs: ['fedora:40@container-prep']
 
 no-valgrind:autotools:
   extends: .fedora-custom-build@autotools-template
@@ -526,10 +526,10 @@ enable-gcov:autotools:
 
 .fedora-custom-build@meson-template:
   extends:
-    - .fedora:38
+    - .fedora:40
     - .meson-build@template
   stage: build
-  needs: ['fedora:38@container-prep']
+  needs: ['fedora:40@container-prep']
 
 no-valgrind:meson:
   extends: .fedora-custom-build@meson-template
@@ -580,7 +580,7 @@ static-build:meson:
 
 soname:
   extends:
-    - .fedora:38
+    - .fedora:40
   stage: build
   script:
   - ./autogen.sh --prefix=$PWD/prefix-autotools/
@@ -589,7 +589,7 @@ soname:
   - meson "$MESON_BUILDDIR" --prefix=$PWD/prefix-meson/
   - ninja -C "$MESON_BUILDDIR" install
   - ls -l $PWD/prefix-meson/lib64/libevdev.so.2.3.0
-  needs: ['fedora:38@container-prep']
+  needs: ['fedora:40@container-prep']
 
 #################################################################
 #                                                               #
@@ -632,10 +632,10 @@ qemu:meson:
   stage: VM
   extends:
     - .fdo.distribution-image@fedora
-    - .fedora:39
+    - .fedora:41
     - .build-in-b2c@template
   needs:
-    - "fedora:39@container-prep"
+    - "fedora:41@container-prep"
 
 qemu:meson:valgrind:
   extends:
@@ -646,7 +646,7 @@ qemu:meson:valgrind:
 
 meson-from-tarball:
   extends:
-    - .fedora:39
+    - .fedora:41
   stage: tarballs
   script:
     - export INSTALLDIR="$PWD/_inst"
@@ -664,11 +664,11 @@ meson-from-tarball:
     - ninja -C "$MESON_BUILDDIR" install
     - popd > /dev/null
     - ls -lR $INSTALLDIR
-  needs: ['fedora:39@container-prep']
+  needs: ['fedora:41@container-prep']
 
 autotools-from-tarball:
   extends:
-    - .fedora:39
+    - .fedora:41
   stage: tarballs
   script:
     - export INSTALLDIR="$PWD/_inst"
@@ -689,4 +689,4 @@ autotools-from-tarball:
   variables:
     LIBEVDEV_SKIP_ROOT_TESTS: 1
 
-  needs: ['fedora:39@container-prep']
+  needs: ['fedora:41@container-prep']
