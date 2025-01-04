@@ -805,23 +805,34 @@ push_mt_sync_events(struct libevdev *dev,
 	int rc;
 
 	for (int slot = 0; slot < dev->num_slots;  slot++) {
-		/* stopped touches were already terminated in
-		 * terminate_slots */
-		if (changes[slot].state == TOUCH_STOPPED ||
-		    !bit_is_set(changes[slot].axes, ABS_MT_SLOT))
-			continue;
+		bool have_slot_event = false;
 
-		queue_push_event(dev, EV_ABS, ABS_MT_SLOT, slot);
-		last_reported_slot = slot;
+		if (!bit_is_set(changes[slot].axes, ABS_MT_SLOT))
+			continue;
 
 		for (int axis = ABS_MT_MIN; axis <= ABS_MT_MAX; axis++) {
 			if (axis == ABS_MT_SLOT ||
 			    !libevdev_has_event_code(dev, EV_ABS, axis))
 				continue;
 
-			if (bit_is_set(changes[slot].axes, axis))
+			if (bit_is_set(changes[slot].axes, axis)) {
+                                /* We already sent the tracking id -1 in
+                                 * terminate_slots so don't do that again. There
+                                 * may be other axes like ABS_MT_TOOL_TYPE that
+                                 * need to be synced despite no touch being active */
+                                if (axis == ABS_MT_TRACKING_ID &&
+                                    *slot_value(dev, slot, axis) == -1)
+					continue;
+
+				if (!have_slot_event) {
+					queue_push_event(dev, EV_ABS, ABS_MT_SLOT, slot);
+					last_reported_slot = slot;
+					have_slot_event = true;
+				}
+
 				queue_push_event(dev, EV_ABS, axis,
 						 *slot_value(dev, slot, axis));
+			}
 		}
 	}
 
