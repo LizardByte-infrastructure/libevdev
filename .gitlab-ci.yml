@@ -4,7 +4,7 @@
 #                                      #
 ########################################
 
-.templates_sha: &template_sha 9568e38927f9e9c48d4f586f84a071c3a4bdcd39 # see https://docs.gitlab.com/ee/ci/yaml/#includefile
+.templates_sha: &template_sha e195d80f35b45cc73668be3767b923fd76c70ed5 # see https://docs.gitlab.com/ee/ci/yaml/#includefile
 
 include:
   - project: 'freedesktop/ci-templates'
