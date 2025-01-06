@@ -144,7 +144,7 @@ check-commit:
     - .fdo.ci-fairy
   stage: prep
   script:
-    - ci-fairy -vv check-commits --signed-off-by --junit-xml=results.xml && exit 0 || true
+    - ci-fairy -vv check-commits --junit-xml=results.xml && exit 0 || true
     - echo "Error checking the commit message format. Please verify"
     - exit 1
   except:
