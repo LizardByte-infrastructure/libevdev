@@ -617,12 +617,12 @@ START_TEST(test_syn_delta_sw)
 			   EV_SYN, SYN_DROPPED,
 			   EV_SW, SW_HEADPHONE_INSERT,
 			   EV_SW, SW_MICROPHONE_INSERT,
-			   EV_SW, SW_MAX,
+			   EV_SW, SW_MACHINE_COVER, /* Replace with SW_MAX once runners are on 6.16 */
 			   -1);
 
 	uinput_device_event(uidev, EV_SW, SW_HEADPHONE_INSERT, 1);
 	uinput_device_event(uidev, EV_SW, SW_MICROPHONE_INSERT, 1);
-	uinput_device_event(uidev, EV_SW, SW_MAX, 1);
+	uinput_device_event(uidev, EV_SW, SW_MACHINE_COVER, 1);
 	uinput_device_event(uidev, EV_SYN, SYN_REPORT, 0);
 	rc = libevdev_next_event(dev, LIBEVDEV_READ_FLAG_FORCE_SYNC, &ev);
 	ck_assert_int_eq(rc, LIBEVDEV_READ_STATUS_SYNC);
@@ -635,7 +635,7 @@ START_TEST(test_syn_delta_sw)
 	assert_event(&ev, EV_SW, SW_MICROPHONE_INSERT, 1);
 	rc = libevdev_next_event(dev, LIBEVDEV_READ_FLAG_SYNC, &ev);
 	ck_assert_int_eq(rc, LIBEVDEV_READ_STATUS_SYNC);
-	assert_event(&ev, EV_SW, SW_MAX, 1);
+	assert_event(&ev, EV_SW, SW_MACHINE_COVER, 1);
 	rc = libevdev_next_event(dev, LIBEVDEV_READ_FLAG_SYNC, &ev);
 	ck_assert_int_eq(rc, LIBEVDEV_READ_STATUS_SYNC);
 	assert_event(&ev, EV_SYN, SYN_REPORT, 0);
@@ -644,7 +644,7 @@ START_TEST(test_syn_delta_sw)
 
 	ck_assert_int_eq(libevdev_get_event_value(dev, EV_SW, SW_HEADPHONE_INSERT), 1);
 	ck_assert_int_eq(libevdev_get_event_value(dev, EV_SW, SW_MICROPHONE_INSERT), 1);
-	ck_assert_int_eq(libevdev_get_event_value(dev, EV_SW, SW_MAX), 1);
+	ck_assert_int_eq(libevdev_get_event_value(dev, EV_SW, SW_MACHINE_COVER), 1);
 
 	uinput_device_free(uidev);
 	libevdev_free(dev);
