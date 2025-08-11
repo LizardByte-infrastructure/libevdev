@@ -6,14 +6,16 @@
  * under the terms of the GNU General Public License version 2 as published by
  * the Free Software Foundation.
  */
-#ifndef _INPUT_H
-#define _INPUT_H
+#ifndef _UAPI_INPUT_H
+#define _UAPI_INPUT_H
 
 
+#ifndef __KERNEL__
 #include <sys/time.h>
 #include <sys/ioctl.h>
 #include <sys/types.h>
 #include <linux/types.h>
+#endif
 
 #include "input-event-codes.h"
 
@@ -273,6 +275,7 @@ struct input_mask {
 #define BUS_CEC			0x1E
 #define BUS_INTEL_ISHTP		0x1F
 #define BUS_AMD_SFH		0x20
+#define BUS_SDW			0x21
 
 /*
  * MT_TOOL types
@@ -513,4 +516,4 @@ struct ff_effect {
 #define FF_MAX		0x7f
 #define FF_CNT		(FF_MAX+1)
 
-#endif /* _INPUT_H */
+#endif /* _UAPI_INPUT_H */
