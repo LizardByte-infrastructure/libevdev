@@ -42,19 +42,19 @@ startswith(const char *str, size_t len, const char *prefix, size_t plen)
 static inline int
 bit_is_set(const unsigned long *array, int bit)
 {
-    return !!(array[bit / LONG_BITS] & (1LL << (bit % LONG_BITS)));
+    return !!(array[bit / LONG_BITS] & (1ULL << (bit % LONG_BITS)));
 }
 
 static inline void
 set_bit(unsigned long *array, int bit)
 {
-    array[bit / LONG_BITS] |= (1LL << (bit % LONG_BITS));
+    array[bit / LONG_BITS] |= (1ULL << (bit % LONG_BITS));
 }
 
 static inline void
 clear_bit(unsigned long *array, int bit)
 {
-    array[bit / LONG_BITS] &= ~(1LL << (bit % LONG_BITS));
+    array[bit / LONG_BITS] &= ~(1ULL << (bit % LONG_BITS));
 }
 
 static inline void
