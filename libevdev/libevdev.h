@@ -1563,8 +1563,7 @@ int libevdev_get_event_value(const struct libevdev *dev, unsigned int type, unsi
  *
  * @return 0 on success, or -1 on failure.
  * @retval -1
- * - the device does not have the event type or
- * - code enabled, or the code is outside the, or
+ * - the device does not have the event type or code enabled, or
  * - the code is outside the allowed limits for the given type, or
  * - the type cannot be set, or
  * - the value is not permitted for the given code.
