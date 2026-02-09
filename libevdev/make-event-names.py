@@ -44,6 +44,10 @@ duplicates = [
     "REP_MAX",
 ]
 
+ignore_prefixes = [
+    "SND_PROFILE_",
+]
+
 btn_additional = [
     [0, "BTN_A"],
     [0, "BTN_B"],
@@ -189,7 +193,7 @@ def parse_define(bits, line):
         return
 
     for prefix in prefixes:
-        if not name.startswith(prefix):
+        if not name.startswith(prefix) or any(name.startswith(p) for p in ignore_prefixes):
             continue
 
         if name.endswith("_MAX"):
