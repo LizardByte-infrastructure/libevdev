@@ -589,7 +589,7 @@ soname:
     # runs the test suite only
     - /app/boot2container
 
-qemu:meson:
+b2c:meson:
   stage: VM
   extends:
     - .fdo.distribution-image@fedora
@@ -598,9 +598,9 @@ qemu:meson:
   needs:
     - "fedora:43@container-prep"
 
-qemu:meson:valgrind:
+b2c:meson:valgrind:
   extends:
-    - qemu:meson
+    - b2c:meson
   variables:
     MESON_TEST_ARGS: '--setup=valgrind'
 

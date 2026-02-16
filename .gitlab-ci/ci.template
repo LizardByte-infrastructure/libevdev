@@ -418,7 +418,7 @@ soname:
 
 {% for distro in distributions if distro.use_for_qemu_tests %}
 {% set version = "{}".format(distro.versions|last()) %}
-qemu:meson:
+b2c:meson:
   stage: VM
   extends:
     - .fdo.distribution-image@{{distro.name}}
@@ -427,9 +427,9 @@ qemu:meson:
   needs:
     - "{{distro.name}}:{{version}}@container-prep"
 
-qemu:meson:valgrind:
+b2c:meson:valgrind:
   extends:
-    - qemu:meson
+    - b2c:meson
   variables:
     MESON_TEST_ARGS: '--setup=valgrind'
 
