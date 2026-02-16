@@ -3,7 +3,7 @@
 #
 
 # We're happy to rebuild all containers when one changes.
-.default_tag: &default_tag '2026-01-16.0'
+.default_tag: &default_tag '2026-01-16.1'
 
 distributions:
   - name: fedora
@@ -118,6 +118,7 @@ distributions:
       - doxygen
       - xz
       - linux-headers
+      - tar
 
 b2c:
   version: 2ff65156ba67fa8a0c309a4fc16c5df1a88a3844

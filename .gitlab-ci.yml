@@ -75,37 +75,37 @@ variables:
 .fedora:43:
   extends: .fdo.distribution-image@fedora
   variables:
-    FDO_DISTRIBUTION_TAG: '2026-01-16.0'
+    FDO_DISTRIBUTION_TAG: '2026-01-16.1'
     FDO_DISTRIBUTION_VERSION: '43'
 
 .ubuntu:25.10:
   extends: .fdo.distribution-image@ubuntu
   variables:
-    FDO_DISTRIBUTION_TAG: '2026-01-16.0'
+    FDO_DISTRIBUTION_TAG: '2026-01-16.1'
     FDO_DISTRIBUTION_VERSION: '25.10'
 
 .debian:stable:
   extends: .fdo.distribution-image@debian
   variables:
-    FDO_DISTRIBUTION_TAG: '2026-01-16.0'
+    FDO_DISTRIBUTION_TAG: '2026-01-16.1'
     FDO_DISTRIBUTION_VERSION: 'stable'
 
 .debian:sid:
   extends: .fdo.distribution-image@debian
   variables:
-    FDO_DISTRIBUTION_TAG: '2026-01-16.0'
+    FDO_DISTRIBUTION_TAG: '2026-01-16.1'
     FDO_DISTRIBUTION_VERSION: 'sid'
 
 .arch:rolling:
   extends: .fdo.distribution-image@arch
   variables:
-    FDO_DISTRIBUTION_TAG: '2026-01-16.0'
+    FDO_DISTRIBUTION_TAG: '2026-01-16.1'
     FDO_DISTRIBUTION_VERSION: 'rolling'
 
 .alpine:latest:
   extends: .fdo.distribution-image@alpine
   variables:
-    FDO_DISTRIBUTION_TAG: '2026-01-16.0'
+    FDO_DISTRIBUTION_TAG: '2026-01-16.1'
     FDO_DISTRIBUTION_VERSION: 'latest'
 
 
@@ -186,7 +186,7 @@ check-merge-request:
 
 .alpine.packages:
   variables:
-    FDO_DISTRIBUTION_PACKAGES: 'git gcc g++ meson automake autoconf libtool make pkgconfig python3 check-dev valgrind binutils doxygen xz linux-headers'
+    FDO_DISTRIBUTION_PACKAGES: 'git gcc g++ meson automake autoconf libtool make pkgconfig python3 check-dev valgrind binutils doxygen xz linux-headers tar'
 
 
 
