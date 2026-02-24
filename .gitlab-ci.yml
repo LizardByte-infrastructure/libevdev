@@ -75,37 +75,37 @@ variables:
 .fedora:43:
   extends: .fdo.distribution-image@fedora
   variables:
-    FDO_DISTRIBUTION_TAG: '2026-01-16.1'
+    FDO_DISTRIBUTION_TAG: '2026-02-24.1'
     FDO_DISTRIBUTION_VERSION: '43'
 
 .ubuntu:25.10:
   extends: .fdo.distribution-image@ubuntu
   variables:
-    FDO_DISTRIBUTION_TAG: '2026-01-16.1'
+    FDO_DISTRIBUTION_TAG: '2026-02-24.1'
     FDO_DISTRIBUTION_VERSION: '25.10'
 
 .debian:stable:
   extends: .fdo.distribution-image@debian
   variables:
-    FDO_DISTRIBUTION_TAG: '2026-01-16.1'
+    FDO_DISTRIBUTION_TAG: '2026-02-24.1'
     FDO_DISTRIBUTION_VERSION: 'stable'
 
 .debian:sid:
   extends: .fdo.distribution-image@debian
   variables:
-    FDO_DISTRIBUTION_TAG: '2026-01-16.1'
+    FDO_DISTRIBUTION_TAG: '2026-02-24.1'
     FDO_DISTRIBUTION_VERSION: 'sid'
 
 .arch:rolling:
   extends: .fdo.distribution-image@arch
   variables:
-    FDO_DISTRIBUTION_TAG: '2026-01-16.1'
+    FDO_DISTRIBUTION_TAG: '2026-02-24.1'
     FDO_DISTRIBUTION_VERSION: 'rolling'
 
 .alpine:latest:
   extends: .fdo.distribution-image@alpine
   variables:
-    FDO_DISTRIBUTION_TAG: '2026-01-16.1'
+    FDO_DISTRIBUTION_TAG: '2026-02-24.1'
     FDO_DISTRIBUTION_VERSION: 'latest'
 
 
@@ -170,7 +170,7 @@ check-merge-request:
 
 .fedora.packages:
   variables:
-    FDO_DISTRIBUTION_PACKAGES: 'git gcc gcc-c++ meson automake autoconf libtool make pkgconfig python3 check-devel valgrind binutils doxygen xz clang-analyzer systemd-udev qemu-img qemu-system-x86-core qemu-system-aarch64-core jq python3-click python3-rich'
+    FDO_DISTRIBUTION_PACKAGES: 'git gcc gcc-c++ meson automake autoconf libtool make pkgconfig python3 check-devel valgrind binutils doxygen xz clang-analyzer systemd-udev qemu-img qemu-system-x86-core qemu-system-aarch64-core jq python3-click python3-rich virtme-ng file'
 
 .ubuntu.packages:
   variables:
@@ -566,41 +566,45 @@ soname:
     exit 1 ;
   fi
 
-# build on the host, then run a systemd service to execute the test suite
-# inside the qemu VM handled by b2c
-.build-in-b2c@template:
+# Run meson and meson test in the container image through qemu
+.build-in-vng@template:
   extends:
     - .default_artifacts
-  tags:
-    - kvm
   variables:
     MESON_BUILDDIR: build_dir
-    B2C_KERNEL: https://gitlab.freedesktop.org/api/v4/projects/libevdev%2Fhid-tools/packages/generic/kernel-x86_64/v6.5/bzImage
-    B2C_IMAGE: $FDO_DISTRIBUTION_IMAGE
-    B2C_COMMAND: .gitlab-ci/start-in-systemd.sh
+    VNG_KERNEL: https://gitlab.freedesktop.org/api/v4/projects/libevdev%2Fhid-tools/packages/generic/kernel-x86_64/v6.14/bzImage
   script:
     # first build in the host container
     - .gitlab-ci/meson-build.sh --skip-test
 
-    # pull b2c
-    - curl -L -o /app/boot2container https://gitlab.freedesktop.org/gfx-ci/boot2container/-/raw/2ff65156ba67fa8a0c309a4fc16c5df1a88a3844/vm2c.py
-    - chmod +x /app/boot2container
+    - mkdir -p $MESON_BUILDDIR
+    - curl -LO $VNG_KERNEL
+
+    - export -p > .vngenv
 
     # runs the test suite only
-    - /app/boot2container
+    - |
+      vng --run ./bzImage \
+          --user root \
+          --overlay-rwdir=$HOME \
+          --append HOME=$HOME \
+          --overlay-rwdir=$(pwd) \
+          --rwdir=$MESON_BUILDDIR \
+          --exec "source $PWD/.vngenv; rm $PWD/.vngenv; .gitlab-ci/meson-build.sh --skip-setup --skip-build --run-test"
 
-b2c:meson:
+
+vng:meson:
   stage: VM
   extends:
     - .fdo.distribution-image@fedora
     - .fedora:43
-    - .build-in-b2c@template
+    - .build-in-vng@template
   needs:
     - "fedora:43@container-prep"
 
-b2c:meson:valgrind:
+vng:meson:valgrind:
   extends:
-    - b2c:meson
+    - vng:meson
   variables:
     MESON_TEST_ARGS: '--setup=valgrind'
 
