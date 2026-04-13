@@ -52,7 +52,7 @@ update_key_state(struct libevdev *dev, const struct input_event *e);
 static inline int*
 slot_value(const struct libevdev *dev, int slot, int axis)
 {
-	if (unlikely(slot > dev->num_slots)) {
+	if (unlikely(slot >= dev->num_slots)) {
 		log_bug(dev, "Slot %d exceeds number of slots (%d)\n", slot, dev->num_slots);
 		slot = 0;
 	}
