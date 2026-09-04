@@ -121,3 +121,11 @@ global:
 local:
 	*;
 } LIBEVDEV_1_7;
+
+LIBEVDEV_1_14 {
+global:
+	libevdev_upload_ff_effect;
+	libevdev_remove_ff_effect;
+local:
+	*;
+} LIBEVDEV_1_10;

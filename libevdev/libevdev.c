@@ -559,6 +559,30 @@ libevdev_get_fd(const struct libevdev* dev)
 	return dev->fd;
 }
 
+LIBEVDEV_EXPORT int
+libevdev_upload_ff_effect(struct libevdev *dev, struct ff_effect *effect)
+{
+	if (!libevdev_has_event_type(dev, EV_FF))
+		return -EINVAL;
+
+	if (ioctl(libevdev_get_fd(dev), EVIOCSFF, effect) < 0)
+		return -errno;
+
+	return 0;
+}
+
+LIBEVDEV_EXPORT int
+libevdev_remove_ff_effect(struct libevdev *dev, short effect_id)
+{
+	if (!libevdev_has_event_type(dev, EV_FF))
+		return -EINVAL;
+
+	if (ioctl(libevdev_get_fd(dev), EVIOCRMFF, effect_id) < 0)
+		return -errno;
+
+	return 0;
+}
+
 static int
 sync_key_state(struct libevdev *dev)
 {

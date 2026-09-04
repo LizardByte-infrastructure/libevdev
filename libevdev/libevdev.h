@@ -1073,6 +1073,32 @@ int libevdev_change_fd(struct libevdev* dev, int fd);
 int libevdev_get_fd(const struct libevdev* dev);
 
 /**
+ * @ingroup kernel
+ *
+ * Uploads a force feedback effect to the given device. The kernel assigns
+ * an ID for this effect (`struct ff_effect->id`) - this id can be used
+ * to remove the effect later.
+ *
+ * @param dev The evdev device
+ * @param effect The struct containing the force feedback effect to upload
+ *
+ * @return 0 on success, negative error code on failure
+ */
+int libevdev_upload_ff_effect(struct libevdev *dev, struct ff_effect *effect);
+
+/**
+ * @ingroup Kernel
+ *
+ * Removes the force feedback effect from the given device
+ *
+ * @param dev The evdev device
+ * @param effect_id the id of the effect to remove
+ *
+ * @return 0 on success, negative error code on failure
+ */
+int libevdev_remove_ff_effect(struct libevdev *dev, short effect_id);
+
+/**
  * @ingroup events
  */
 enum libevdev_read_status {
