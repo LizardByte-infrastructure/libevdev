@@ -532,9 +532,9 @@ extern "C" {
  * <dt>EVIOCSABS:</dt>
  * <dd>supported, see libevdev_kernel_set_abs_info()</dd>
  * <dt>EVIOCSFF:</dt>
- * <dd>currently not supported</dd>
+ * <dd>supported, see libevdev_upload_ff_effect()</dd>
  * <dt>EVIOCRMFF:</dt>
- * <dd>currently not supported</dd>
+ * <dd>supported, see libevdev_remove_ff_effect()</dd>
  * <dt>EVIOCGEFFECTS:</dt>
  * <dd>currently not supported</dd>
  * <dt>EVIOCGRAB:</dt>
