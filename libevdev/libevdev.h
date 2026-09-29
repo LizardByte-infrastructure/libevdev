@@ -1087,7 +1087,7 @@ int libevdev_get_fd(const struct libevdev* dev);
 int libevdev_upload_ff_effect(struct libevdev *dev, struct ff_effect *effect);
 
 /**
- * @ingroup Kernel
+ * @ingroup kernel
  *
  * Removes the force feedback effect from the given device
  *
