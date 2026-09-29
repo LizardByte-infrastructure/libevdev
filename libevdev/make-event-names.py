@@ -133,12 +133,13 @@ def print_lookup(bits, prefix):
         names.append((bits.max_codes[maxname], maxname))
 
     for val, name in sorted(names, key=lambda e: e[1]):
-        print("    { .name = \"%s\", .value = %s }," % (name, name))
+        print("    { .name = \"%s\", .name_len = %s, .value = %s }," % (name, len(name), name))
 
 
 def print_lookup_table(bits):
     print("struct name_entry {")
     print("    const char *name;")
+    print("    size_t name_len;")
     print("    unsigned int value;")
     print("};")
     print("")

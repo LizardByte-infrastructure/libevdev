@@ -27,13 +27,12 @@ static int cmp_entry(const void *vlookup, const void *ventry)
 	int r;
 
 	r = strncmp(lookup->name, entry->name, lookup->len);
-	if (!r) {
-		if (entry->name[lookup->len])
-			r = -1;
-		else
-			r = 0;
+	if (r == 0) {
+		if (lookup->len < entry->name_len)
+			return -1;
+		else if (lookup->len > entry->name_len)
+			return 1;
 	}
-
 	return r;
 }
 
